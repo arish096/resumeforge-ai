@@ -275,6 +275,7 @@ const localAI: AIService = {
       ],
       matchedKeywords,
       missingKeywords,
+      formatting,
     };
   },
 };
