@@ -217,12 +217,16 @@
     transform: none !important;
     box-shadow: none !important;
     width: 210mm !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .resume-print-root .resume-page {
     box-shadow: none !important;
     border: none !important;
     min-height: auto !important;
+    width: 210mm !important;
+    transform: none !important;
   }
 
   .resume-avoid-break {
