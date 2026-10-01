@@ -28,7 +28,11 @@ export function ResumePreview({
 }: Props) {
   const Template = getTemplate(templateId).component;
   const wrapRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
   const [autoScale, setAutoScale] = useState(scale ?? 1);
+  const [pageHeight, setPageHeight] = useState(1123);
+
+  const effective = scale ?? (fit ? autoScale : 1);
 
   useEffect(() => {
     if (!fit || scale) return;
@@ -41,7 +45,15 @@ export function ResumePreview({
     return () => ro.disconnect();
   }, [fit, scale]);
 
-  const effective = scale ?? (fit ? autoScale : 1);
+  useEffect(() => {
+    const el = pageRef.current;
+    if (!el) return;
+    const update = () => setPageHeight(el.scrollHeight);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [data, templateId]);
 
   return (
     <div ref={wrapRef} className={`w-full ${className}`}>
@@ -49,21 +61,21 @@ export function ResumePreview({
         className={printable ? "resume-print-root" : undefined}
         style={{
           width: A4_WIDTH_PX * effective,
-          height: effective === 1 ? undefined : undefined,
+          height: pageHeight * effective,
           margin: "0 auto",
+          overflow: "hidden",
         }}
       >
         <div
+          ref={pageRef}
+          className="resume-page shadow-page"
           style={{
             width: A4_WIDTH_PX,
             transform: `scale(${effective})`,
             transformOrigin: "top left",
-            marginBottom: effective < 1 ? `calc((${effective} - 1) * 100%)` : undefined,
           }}
         >
-          <div className="resume-page shadow-page" style={{ width: A4_WIDTH_PX }}>
-            <Template data={data} mode={mode} />
-          </div>
+          <Template data={data} mode={mode} />
         </div>
       </div>
     </div>
