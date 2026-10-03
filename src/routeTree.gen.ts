@@ -10,17 +10,27 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtsAnalyzerRouteImport } from './routes/ats-analyzer'
 import { Route as BuilderRouteImport } from './routes/builder'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as ImportRouteImport } from './routes/import'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TailorRouteImport } from './routes/tailor'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as EditorResumeIdRouteImport } from './routes/editor.$resumeId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtsAnalyzerRoute = AtsAnalyzerRouteImport.update({
+  id: '/ats-analyzer',
+  path: '/ats-analyzer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuilderRoute = BuilderRouteImport.update({
@@ -33,6 +43,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
@@ -43,9 +58,19 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImportRoute = ImportRouteImport.update({
+  id: '/import',
+  path: '/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TailorRoute = TailorRouteImport.update({
+  id: '/tailor',
+  path: '/tailor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TemplatesRoute = TemplatesRouteImport.update({
@@ -58,80 +83,120 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorResumeIdRoute = EditorResumeIdRouteImport.update({
+  id: '/editor/$resumeId',
+  path: '/editor/$resumeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ats-analyzer': typeof AtsAnalyzerRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/import': typeof ImportRoute
   '/privacy': typeof PrivacyRoute
+  '/tailor': typeof TailorRoute
   '/templates': typeof TemplatesRoute
   '/terms': typeof TermsRoute
+  '/editor/$resumeId': typeof EditorResumeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ats-analyzer': typeof AtsAnalyzerRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/import': typeof ImportRoute
   '/privacy': typeof PrivacyRoute
+  '/tailor': typeof TailorRoute
   '/templates': typeof TemplatesRoute
   '/terms': typeof TermsRoute
+  '/editor/$resumeId': typeof EditorResumeIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ats-analyzer': typeof AtsAnalyzerRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/import': typeof ImportRoute
   '/privacy': typeof PrivacyRoute
+  '/tailor': typeof TailorRoute
   '/templates': typeof TemplatesRoute
   '/terms': typeof TermsRoute
+  '/editor/$resumeId': typeof EditorResumeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ats-analyzer'
     | '/builder'
     | '/contact'
+    | '/dashboard'
     | '/features'
     | '/how-it-works'
+    | '/import'
     | '/privacy'
+    | '/tailor'
     | '/templates'
     | '/terms'
+    | '/editor/$resumeId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ats-analyzer'
     | '/builder'
     | '/contact'
+    | '/dashboard'
     | '/features'
     | '/how-it-works'
+    | '/import'
     | '/privacy'
+    | '/tailor'
     | '/templates'
     | '/terms'
+    | '/editor/$resumeId'
   id:
     | '__root__'
     | '/'
+    | '/ats-analyzer'
     | '/builder'
     | '/contact'
+    | '/dashboard'
     | '/features'
     | '/how-it-works'
+    | '/import'
     | '/privacy'
+    | '/tailor'
     | '/templates'
     | '/terms'
+    | '/editor/$resumeId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AtsAnalyzerRoute: typeof AtsAnalyzerRoute
   BuilderRoute: typeof BuilderRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   FeaturesRoute: typeof FeaturesRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  ImportRoute: typeof ImportRoute
   PrivacyRoute: typeof PrivacyRoute
+  TailorRoute: typeof TailorRoute
   TemplatesRoute: typeof TemplatesRoute
   TermsRoute: typeof TermsRoute
+  EditorResumeIdRoute: typeof EditorResumeIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -141,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ats-analyzer': {
+      id: '/ats-analyzer'
+      path: '/ats-analyzer'
+      fullPath: '/ats-analyzer'
+      preLoaderRoute: typeof AtsAnalyzerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/builder': {
@@ -157,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
@@ -171,11 +250,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/import': {
+      id: '/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof ImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tailor': {
+      id: '/tailor'
+      path: '/tailor'
+      fullPath: '/tailor'
+      preLoaderRoute: typeof TailorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/templates': {
@@ -192,18 +285,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/editor/$resumeId': {
+      id: '/editor/$resumeId'
+      path: '/editor/$resumeId'
+      fullPath: '/editor/$resumeId'
+      preLoaderRoute: typeof EditorResumeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AtsAnalyzerRoute: AtsAnalyzerRoute,
   BuilderRoute: BuilderRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   FeaturesRoute: FeaturesRoute,
   HowItWorksRoute: HowItWorksRoute,
+  ImportRoute: ImportRoute,
   PrivacyRoute: PrivacyRoute,
+  TailorRoute: TailorRoute,
   TemplatesRoute: TemplatesRoute,
   TermsRoute: TermsRoute,
+  EditorResumeIdRoute: EditorResumeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
