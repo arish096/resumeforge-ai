@@ -60,7 +60,7 @@ function ContactPage() {
         <div className="space-y-1.5">
           <Label htmlFor="message">Message</Label>
           <Textarea id="message" rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
-          {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
+          {errors["message"] && <p className="text-sm text-destructive">{errors["message"]}</p>}
         </div>
         <Button type="submit">Send message</Button>
       </form>

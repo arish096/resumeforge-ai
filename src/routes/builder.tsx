@@ -10,7 +10,7 @@ const TEMPLATE_IDS = TEMPLATES.map((t) => t.id);
 
 export const Route = createFileRoute("/builder")({
   validateSearch: (search: Record<string, unknown>): { template?: TemplateId } => {
-    const t = search.template;
+    const t = search["template"];
     return typeof t === "string" && (TEMPLATE_IDS as string[]).includes(t) ? { template: t as TemplateId } : {};
   },
   head: () => ({
