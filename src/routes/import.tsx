@@ -27,7 +27,7 @@ export const Route = createFileRoute("/import")({
 async function extractText(file: File): Promise<string> {
   if (file.type !== "application/pdf") return "";
   const raw = new TextDecoder("latin1").decode(await file.arrayBuffer());
-  const runs = [...raw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)].map((m) => m[1].replace(/\\(.)/g, "$1"));
+  const runs = [...raw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)].map((m) => (m[1] ?? "").replace(/\\(.)/g, "$1"));
   return runs.join("\n");
 }
 
@@ -50,8 +50,8 @@ function ImportPage() {
 
   const onFile = async (f: File | undefined) => {
     if (!f) return;
-    if (f.size > 10 * 1024 * 1024) return toast.error("Please upload a file under 10 MB.");
-    if (!/pdf|image\//.test(f.type)) return toast.error("Upload a PDF, PNG or JPG file.");
+    if (f.size > 10 * 1024 * 1024) { toast.error("Please upload a file under 10 MB."); return; }
+    if (!/pdf|image\//.test(f.type)) { toast.error("Upload a PDF, PNG or JPG file."); return; }
     setFile(f);
     setBusy(true);
     const text = await extractText(f);

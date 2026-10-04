@@ -27,8 +27,8 @@ export function Field({
   type?: string;
   multiline?: boolean;
   rows?: number;
-  hint?: string;
-  error?: string;
+  hint?: string | undefined;
+  error?: string | undefined;
   className?: string;
 }) {
   return (

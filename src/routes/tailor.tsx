@@ -35,8 +35,8 @@ function TailorPage() {
   const resume = saved.find((r) => r.id === id);
 
   const run = async () => {
-    if (!resume) return toast.error("Choose a resume first.");
-    if (jd.trim().length < 50) return toast.error("Paste the full job description.");
+    if (!resume) { toast.error("Choose a resume first."); return; }
+    if (jd.trim().length < 50) { toast.error("Paste the full job description."); return; }
     setLoading(true);
     setResult(await getAIService().tailorToJob({ data: resume.data, jobDescription: jd }));
     setLoading(false);

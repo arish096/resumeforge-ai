@@ -161,7 +161,7 @@ function EditorPage() {
     );
   }
 
-  const Current = STEPS[step];
+  const Current = STEPS[step]!;
   const progress = Math.round(((step + 1) / STEPS.length) * 100);
 
   return (

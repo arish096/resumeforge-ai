@@ -54,4 +54,4 @@ export const TEMPLATES: TemplateMeta[] = [
 ];
 
 export const getTemplate = (id: TemplateId): TemplateMeta =>
-  TEMPLATES.find((t) => t.id === id) ?? TEMPLATES[0];
+  TEMPLATES.find((t) => t.id === id) ?? TEMPLATES[0]!;

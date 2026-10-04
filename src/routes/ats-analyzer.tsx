@@ -36,8 +36,8 @@ function AtsPage() {
   const resumeText = source === "__paste" ? pasted : resumeToText(saved.find((r) => r.id === source)?.data ?? ({} as never));
 
   const run = async () => {
-    if (resumeText.trim().length < 50) return toast.error("Add your resume text (at least a few lines).");
-    if (jd.trim().length < 50) return toast.error("Paste the full job description.");
+    if (resumeText.trim().length < 50) { toast.error("Add your resume text (at least a few lines)."); return; }
+    if (jd.trim().length < 50) { toast.error("Paste the full job description."); return; }
     setLoading(true);
     try {
       setReport(await getAIService().analyzeAts({ resumeText, jobDescription: jd }));
