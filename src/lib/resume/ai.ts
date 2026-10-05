@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { toast } from "sonner";
 import type { ResumeData, ResumeMode } from "./types";
 import { toBullets } from "./types";
+import { aiTask } from "./ai.functions";
 
 /**
  * AI service abstraction.
@@ -280,4 +283,50 @@ const localAI: AIService = {
   },
 };
 
-export const getAIService = (): AIService => localAI;
+/** Calls the real AI model; falls back to the local rules if AI is unavailable. */
+async function remote<T>(task: Parameters<typeof aiTask>[0]["data"]["task"], payload: unknown, fallback: () => Promise<T>, map: (j: any) => T): Promise<T> {
+  try {
+    const res = await aiTask({ data: { task, payload: JSON.stringify(payload) } });
+    if (!res.ok) throw new Error(res.error);
+    return map(JSON.parse(res.json));
+  } catch (e) {
+    toast.error(e instanceof Error ? e.message : "AI request failed", { description: "Showing a basic rule-based result instead." });
+    return fallback();
+  }
+}
+
+const arr = (v: unknown): string[] => (Array.isArray(v) ? v.map(String).filter(Boolean) : []);
+const sugg = (j: any): AISuggestion => ({ text: String(j.text ?? ""), missing: arr(j.missing), notes: arr(j.notes) });
+
+const realAI: AIService = {
+  improveSummary: (i) => remote("summary", i, () => localAI.improveSummary(i), sugg),
+  improveProjectDescription: (i) => remote("project", i, () => localAI.improveProjectDescription(i), sugg),
+  improveExperience: (i) => remote("experience", i, () => localAI.improveExperience(i), sugg),
+  suggestSkills: (d) =>
+    remote("skills", { projects: d.projects, experience: d.experience, education: d.education, currentSkills: d.skills }, () => localAI.suggestSkills(d), (j) => arr(j.skills).slice(0, 12)),
+  tailorToJob: (i) =>
+    remote("tailor", { resume: i.data, jobDescription: i.jobDescription }, () => localAI.tailorToJob(i), (j) => {
+      const keep = (ids: string[], all: { id: string }[]) => [...ids.filter((id) => all.some((x) => x.id === id)), ...all.map((x) => x.id).filter((id) => !ids.includes(id))];
+      return {
+        matchedSkills: arr(j.matchedSkills),
+        missingKeywords: arr(j.missingKeywords).slice(0, 15),
+        prioritisedProjectIds: keep(arr(j.prioritisedProjectIds), i.data.projects),
+        prioritisedExperienceIds: keep(arr(j.prioritisedExperienceIds), i.data.experience),
+        suggestions: arr(j.suggestions),
+        questions: arr(j.questions),
+      };
+    }),
+  analyzeAts: (i) =>
+    remote("ats", i, () => localAI.analyzeAts(i), (j) => {
+      const clamp = (n: unknown) => Math.max(0, Math.min(100, Math.round(Number(n) || 0)));
+      return {
+        overall: clamp(j.overall),
+        sections: (Array.isArray(j.sections) ? j.sections : []).map((s: any) => ({ label: String(s.label), score: clamp(s.score), detail: String(s.detail ?? "") })),
+        matchedKeywords: arr(j.matchedKeywords),
+        missingKeywords: arr(j.missingKeywords),
+        formatting: (Array.isArray(j.formatting) ? j.formatting : []).map((f: any) => ({ ok: Boolean(f.ok), message: String(f.message ?? "") })),
+      };
+    }),
+};
+
+export const getAIService = (): AIService => realAI;
