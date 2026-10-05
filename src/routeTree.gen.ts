@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AtsAnalyzerRouteImport } from './routes/ats-analyzer'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BuilderRouteImport } from './routes/builder'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 const AtsAnalyzerRoute = AtsAnalyzerRouteImport.update({
   id: '/ats-analyzer',
   path: '/ats-analyzer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuilderRoute = BuilderRouteImport.update({
@@ -92,6 +98,7 @@ const EditorResumeIdRoute = EditorResumeIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ats-analyzer': typeof AtsAnalyzerRoute
+  '/auth': typeof AuthRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ats-analyzer': typeof AtsAnalyzerRoute
+  '/auth': typeof AuthRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ats-analyzer': typeof AtsAnalyzerRoute
+  '/auth': typeof AuthRoute
   '/builder': typeof BuilderRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ats-analyzer'
+    | '/auth'
     | '/builder'
     | '/contact'
     | '/dashboard'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ats-analyzer'
+    | '/auth'
     | '/builder'
     | '/contact'
     | '/dashboard'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ats-analyzer'
+    | '/auth'
     | '/builder'
     | '/contact'
     | '/dashboard'
@@ -186,6 +198,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AtsAnalyzerRoute: typeof AtsAnalyzerRoute
+  AuthRoute: typeof AuthRoute
   BuilderRoute: typeof BuilderRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/ats-analyzer'
       fullPath: '/ats-analyzer'
       preLoaderRoute: typeof AtsAnalyzerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/builder': {
@@ -298,6 +318,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AtsAnalyzerRoute: AtsAnalyzerRoute,
+  AuthRoute: AuthRoute,
   BuilderRoute: BuilderRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,

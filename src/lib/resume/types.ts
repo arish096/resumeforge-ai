@@ -9,6 +9,8 @@ export interface PersonalInfo {
   linkedin: string;
   github: string;
   portfolio: string;
+  /** Optional profile photo as a small data URL. */
+  photo?: string;
 }
 
 export interface EducationEntry {
@@ -94,7 +96,17 @@ export interface ResumeDocument {
   data: ResumeData;
 }
 
-export type TemplateId = "ats-simple" | "modern" | "minimal" | "classic" | "developer";
+export type TemplateId =
+  | "ats-simple"
+  | "modern"
+  | "minimal"
+  | "classic"
+  | "developer"
+  | "creative-sidebar"
+  | "bold-header"
+  | "elegant-photo"
+  | "two-tone"
+  | "timeline";
 
 export const SKILL_CATEGORIES = [
   "Technical Skills",

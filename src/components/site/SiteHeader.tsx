@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const NAV = [
   { to: "/features", label: "Features" },
@@ -23,6 +24,7 @@ export function Brand({ className = "" }: { className?: string }) {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
@@ -41,9 +43,14 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 md:flex">
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/dashboard">Sign In</Link>
-          </Button>
+          {user ? (
+            <>
+              <Button asChild variant="ghost" size="sm"><Link to="/dashboard">My Resumes</Link></Button>
+              <Button variant="ghost" size="sm" onClick={() => signOut()}>Sign Out</Button>
+            </>
+          ) : (
+            <Button asChild variant="ghost" size="sm"><Link to="/auth">Sign In</Link></Button>
+          )}
           <Button asChild size="sm">
             <Link to="/builder">Get Started</Link>
           </Button>
@@ -72,11 +79,13 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2">
-              <Button asChild variant="outline" className="flex-1">
-                <Link to="/dashboard" onClick={() => setOpen(false)}>
-                  Sign In
-                </Link>
-              </Button>
+              {user ? (
+                <Button variant="outline" className="flex-1" onClick={() => { setOpen(false); void signOut(); }}>Sign Out</Button>
+              ) : (
+                <Button asChild variant="outline" className="flex-1">
+                  <Link to="/auth" onClick={() => setOpen(false)}>Sign In</Link>
+                </Button>
+              )}
               <Button asChild className="flex-1">
                 <Link to="/builder" onClick={() => setOpen(false)}>
                   Get Started
