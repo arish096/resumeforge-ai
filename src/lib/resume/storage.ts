@@ -1,3 +1,4 @@
+import { supabase } from "@/integrations/supabase/client";
 import { emptyResumeData, uid, type ResumeDocument, type ResumeMode, type TemplateId } from "./types";
 
 /**
@@ -7,6 +8,39 @@ import { emptyResumeData, uid, type ResumeDocument, type ResumeMode, type Templa
 const KEY = "resumeforge.resumes.v1";
 
 const isBrowser = () => typeof window !== "undefined";
+
+/* ---------- Cloud sync (active only while signed in) ---------- */
+let cloudUser: string | null = null;
+
+function pushDoc(doc: ResumeDocument) {
+  if (!cloudUser) return;
+  void supabase
+    .from("resumes")
+    .upsert({ id: doc.id, user_id: cloudUser, doc: doc as never, updated_at: doc.updatedAt })
+    .then(({ error }) => error && console.error("Cloud save failed", error));
+}
+function removeDoc(id: string) {
+  if (!cloudUser) return;
+  void supabase.from("resumes").delete().eq("id", id).then(({ error }) => error && console.error(error));
+}
+
+/** Called when the session changes. Merges cloud + local resumes (newest wins). */
+export async function setCloudUser(userId: string | null) {
+  cloudUser = userId;
+  if (!userId || !isBrowser()) return;
+  const { data, error } = await supabase.from("resumes").select("doc");
+  if (error) return console.error(error);
+  const remote = new Map((data ?? []).map((r) => [(r.doc as unknown as ResumeDocument).id, r.doc as unknown as ResumeDocument]));
+  const merged = new Map(remote);
+  for (const local of listResumes()) {
+    const r = remote.get(local.id);
+    if (!r || r.updatedAt < local.updatedAt) {
+      merged.set(local.id, local);
+      pushDoc(local);
+    }
+  }
+  writeAll([...merged.values()]);
+}
 
 export function listResumes(): ResumeDocument[] {
   if (!isBrowser()) return [];
@@ -49,6 +83,7 @@ export function createResume(opts: {
     data: opts.data ?? emptyResumeData(),
   };
   writeAll([doc, ...listResumes()]);
+  pushDoc(doc);
   return doc;
 }
 
@@ -59,6 +94,7 @@ export function saveResume(doc: ResumeDocument) {
   if (idx === -1) all.unshift(next);
   else all[idx] = next;
   writeAll(all);
+  pushDoc(next);
   return next;
 }
 
@@ -74,11 +110,13 @@ export function duplicateResume(id: string): ResumeDocument | undefined {
     updatedAt: now,
   };
   writeAll([copy, ...listResumes()]);
+  pushDoc(copy);
   return copy;
 }
 
 export function deleteResume(id: string) {
   writeAll(listResumes().filter((r) => r.id !== id));
+  removeDoc(id);
 }
 
 export function subscribe(listener: () => void) {
