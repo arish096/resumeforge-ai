@@ -11,9 +11,9 @@ export const Route = createFileRoute("/templates")({
   head: () => ({
     meta: [
       { title: "Resume Templates — ResumeForge AI" },
-      { name: "description", content: "ATS Simple, Modern Professional, Minimal, Classic and Developer resume templates." },
+      { name: "description", content: "ATS-friendly and Canva-style photo resume templates." },
       { property: "og:title", content: "Resume Templates — ResumeForge AI" },
-      { property: "og:description", content: "Five professional layouts that all share one resume record." },
+      { property: "og:description", content: "Ten professional and designer layouts that all share one resume record." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -50,7 +50,7 @@ function TemplatesPage() {
             <div className="flex flex-1 flex-col p-5">
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-semibold">{t.name}</h2>
-                <Badge variant="secondary">ATS-friendly</Badge>
+                <Badge variant="secondary">{t.photo ? "Designer · Photo" : "ATS-friendly"}</Badge>
               </div>
               <p className="mt-1 flex-1 text-sm text-muted-foreground">{t.tagline}</p>
               <Button className="mt-4" onClick={() => use(t.id)}>

@@ -67,7 +67,42 @@ export function PersonalStep({ doc, update }: StepProps) {
         <Field id="github" label="GitHub URL" value={p.github} onChange={set("github")} placeholder="github.com/you" error={isUrlish(p.github) ? undefined : "Enter a link like github.com/you"} />
         <Field id="portfolio" label="Portfolio URL" value={p.portfolio} onChange={set("portfolio")} placeholder="yourname.dev" error={isUrlish(p.portfolio) ? undefined : "Enter a valid website address"} />
       </div>
+      <PhotoPicker value={p.photo} onChange={(v) => update((d) => ({ ...d, personal: { ...d.personal, photo: v } }))} />
     </>
+  );
+}
+
+/** Resizes an image to a small square JPEG data URL. */
+async function toThumb(file: File, size = 320): Promise<string> {
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
+  await img.decode();
+  const s = Math.min(img.width, img.height);
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  c.getContext("2d")!.drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, size, size);
+  URL.revokeObjectURL(img.src);
+  return c.toDataURL("image/jpeg", 0.85);
+}
+
+function PhotoPicker({ value, onChange }: { value?: string; onChange: (v: string | undefined) => void }) {
+  return (
+    <div className="mt-5 flex items-center gap-4 rounded-xl border border-border bg-surface-muted p-4">
+      {value ? <img src={value} alt="Profile" className="size-16 rounded-full object-cover" /> : <div className="size-16 rounded-full bg-secondary" />}
+      <div className="flex-1">
+        <p className="text-sm font-medium">Profile photo (optional)</p>
+        <p className="text-xs text-muted-foreground">Shown on the designer templates. ATS templates leave it out.</p>
+      </div>
+      <Label className="cursor-pointer rounded-md border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-secondary">
+        {value ? "Change" : "Upload"}
+        <input type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={async (e) => {
+          const f = e.target.files?.[0];
+          if (!f) return;
+          try { onChange(await toThumb(f)); } catch { toast.error("Couldn't read that image."); }
+        }} />
+      </Label>
+      {value && <Button type="button" variant="ghost" size="sm" onClick={() => onChange(undefined)}>Remove</Button>}
+    </div>
   );
 }
 
