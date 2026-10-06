@@ -67,6 +67,10 @@
   --color-resume-accent: var(--resume-accent);
   --color-resume-rule: var(--resume-rule);
   --color-resume-surface: var(--resume-surface);
+  --color-resume-band: var(--resume-band);
+  --color-resume-band-ink: var(--resume-band-ink);
+  --color-resume-tint: var(--resume-tint);
+  --color-resume-pop: var(--resume-pop);
   --shadow-soft: 0 1px 2px oklch(0.25 0.06 258 / 0.06), 0 12px 32px -18px oklch(0.25 0.06 258 / 0.25);
   --shadow-lift: 0 2px 4px oklch(0.25 0.06 258 / 0.05), 0 24px 60px -28px oklch(0.25 0.06 258 / 0.35);
   --shadow-page: 0 1px 1px oklch(0.25 0.06 258 / 0.08), 0 30px 70px -40px oklch(0.25 0.06 258 / 0.45);
@@ -122,6 +126,10 @@
   --resume-accent: oklch(0.42 0.12 258);
   --resume-rule: oklch(0.82 0.01 258);
   --resume-surface: oklch(1 0 0);
+  --resume-band: oklch(0.3 0.06 200);
+  --resume-band-ink: oklch(0.98 0.01 200);
+  --resume-tint: oklch(0.95 0.025 200);
+  --resume-pop: oklch(0.68 0.15 45);
 }
 
 @layer base {

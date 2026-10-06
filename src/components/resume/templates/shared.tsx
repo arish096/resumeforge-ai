@@ -57,3 +57,13 @@ export function Links({ items }: { items: { label: string; value: string }[] }) 
     </p>
   );
 }
+
+export function Photo({ data, className = "" }: { data: ResumeData; className?: string }) {
+  const p = data.personal;
+  const initials = (p.fullName || "Your Name").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+  return p.photo ? (
+    <img src={p.photo} alt={p.fullName || "Profile photo"} className={`object-cover ${className}`} />
+  ) : (
+    <div className={`flex items-center justify-center bg-resume-tint font-bold text-resume-band ${className}`}>{initials}</div>
+  );
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { FileUp, Layers, Loader2, Upload } from "lucide-react";
@@ -7,7 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Field } from "@/components/builder/fields";
 import { createResume } from "@/lib/resume/storage";
-import { emptyResumeData, type PersonalInfo } from "@/lib/resume/types";
+import {
+  emptyResumeData, uid, type AchievementEntry, type CertificationEntry, type EducationEntry, type ExperienceEntry,
+  type LanguageEntry, type PersonalInfo, type ProjectEntry, type ResumeData, type SkillGroup,
+} from "@/lib/resume/types";
+import { aiImportResume } from "@/lib/resume/ai.functions";
 
 export const Route = createFileRoute("/import")({
   head: () => ({
@@ -23,28 +28,39 @@ export const Route = createFileRoute("/import")({
   component: ImportPage,
 });
 
-/** Best-effort extraction from text-based PDFs. Reads literal text runs only. */
-async function extractText(file: File): Promise<string> {
-  if (file.type !== "application/pdf") return "";
-  const raw = new TextDecoder("latin1").decode(await file.arrayBuffer());
-  const runs = [...raw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)].map((m) => (m[1] ?? "").replace(/\\(.)/g, "$1"));
-  return runs.join("\n");
+const withIds = <T extends object>(list: unknown): (T & { id: string })[] =>
+  Array.isArray(list) ? list.map((x) => ({ ...(x as T), id: uid() })) : [];
+
+function normalise(raw: any): ResumeData {
+  const base = emptyResumeData();
+  return {
+    personal: { ...base.personal, ...(raw?.personal ?? {}) },
+    summary: String(raw?.summary ?? ""),
+    education: withIds<EducationEntry>(raw?.education),
+    skills: withIds<SkillGroup>(raw?.skills).map((g) => ({ ...g, category: g.category || "Skills", items: Array.isArray(g.items) ? g.items.filter(Boolean) : [] })),
+    projects: withIds<ProjectEntry>(raw?.projects).map((p) => ({ ...p, technologies: Array.isArray(p.technologies) ? p.technologies.filter(Boolean) : [] })),
+    experience: withIds<ExperienceEntry>(raw?.experience).map((x) => ({ ...x, current: Boolean(x.current) })),
+    certifications: withIds<CertificationEntry>(raw?.certifications),
+    achievements: withIds<AchievementEntry>(raw?.achievements),
+    languages: withIds<LanguageEntry>(raw?.languages),
+  };
 }
 
-function guessPersonal(text: string): Partial<PersonalInfo> {
-  const email = text.match(/[\w.+-]+@[\w-]+\.[\w.]+/)?.[0] ?? "";
-  const phone = text.match(/\+?\d[\d\s-]{8,}\d/)?.[0] ?? "";
-  const linkedin = text.match(/linkedin\.com\/in\/[\w-]+/i)?.[0] ?? "";
-  const github = text.match(/github\.com\/[\w-]+/i)?.[0] ?? "";
-  const firstLine = text.split("\n").map((l) => l.trim()).find((l) => /^[A-Za-z][A-Za-z .'-]{2,40}$/.test(l)) ?? "";
-  return { fullName: firstLine, email, phone, linkedin, github };
-}
+const toBase64 = (f: File) =>
+  new Promise<string>((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(String(r.result).split(",")[1] ?? "");
+    r.onerror = rej;
+    r.readAsDataURL(f);
+  });
 
 function ImportPage() {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
-  const [personal, setPersonal] = useState<PersonalInfo | null>(null);
+  const [parsed, setParsed] = useState<ResumeData | null>(null);
+  const personal = parsed?.personal ?? null;
+  const setPersonal = (fn: (p: PersonalInfo | null) => PersonalInfo | null) => setParsed((d) => (d ? { ...d, personal: fn(d.personal)! } : d));
   const [summary, setSummary] = useState("");
   const [styleFile, setStyleFile] = useState<File | null>(null);
 
@@ -54,17 +70,25 @@ function ImportPage() {
     if (!/pdf|image\//.test(f.type)) { toast.error("Upload a PDF, PNG or JPG file."); return; }
     setFile(f);
     setBusy(true);
-    const text = await extractText(f);
-    const base = emptyResumeData().personal;
-    setPersonal({ ...base, ...guessPersonal(text) });
-    setSummary("");
-    setBusy(false);
-    toast(text ? "We pulled out what we could — please review every field." : "We couldn't read text from this file automatically. Fill in the fields below.");
+    try {
+      const res = await aiImportResume({ data: { base64: await toBase64(f), mediaType: f.type, filename: f.name } });
+      if (!res.ok) throw new Error(res.error);
+      const data = normalise(JSON.parse(res.json));
+      setParsed(data);
+      setSummary(data.summary);
+      toast.success("Resume read — please review everything before saving.");
+    } catch (e) {
+      setParsed(emptyResumeData());
+      setSummary("");
+      toast.error(e instanceof Error ? e.message : "Couldn't read this file", { description: "Fill in the details below instead." });
+    } finally {
+      setBusy(false);
+    }
   };
 
   const create = () => {
-    if (!personal) return;
-    const data = { ...emptyResumeData(), personal, summary };
+    if (!parsed || !personal) return;
+    const data = { ...parsed, summary };
     const doc = createResume({ mode: "experienced", name: `Imported — ${personal.fullName || file?.name || "resume"}`, data });
     toast.success("Imported resume created");
     navigate({ to: "/editor/$resumeId", params: { resumeId: doc.id } });
@@ -74,7 +98,7 @@ function ImportPage() {
 
   return (
     <PageShell>
-      <PageIntro eyebrow="Import" title="Bring in your existing resume" text="Upload a PDF or image. You'll review everything we detect before a new resume is created — nothing is overwritten." />
+      <PageIntro eyebrow="Import" title="Bring in your existing resume" text="Upload a PDF or image — AI reads every section. You'll review everything we detect before a new resume is created — nothing is overwritten." />
       <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
         <Tabs defaultValue="import">
           <TabsList>
@@ -93,7 +117,14 @@ function ImportPage() {
             {personal && (
               <div className="surface-card p-6">
                 <h2 className="text-lg font-semibold">Review extracted information</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Check and correct everything. You can add education, projects and experience in the builder next.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Check and correct everything. AI read your file as written — nothing was invented.</p>
+                {parsed && (
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                    {([["Education", parsed.education.length], ["Experience", parsed.experience.length], ["Projects", parsed.projects.length], ["Skill groups", parsed.skills.length], ["Certifications", parsed.certifications.length], ["Achievements", parsed.achievements.length], ["Languages", parsed.languages.length]] as const).map(([l, n]) => (
+                      <span key={l} className="rounded-full bg-secondary px-2.5 py-1">{l}: {n}</span>
+                    ))}
+                  </div>
+                )}
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <Field id="im-name" label="Full name" value={personal.fullName} onChange={set("fullName")} />
                   <Field id="im-title" label="Professional title" value={personal.title} onChange={set("title")} />
