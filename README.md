@@ -2,7 +2,7 @@
 
 ### Build. Tailor. Get Hired.
 
-**AI-Powered Resume Builder for Students, Freshers & Professionals**
+**AI-powered resume builder for students, freshers, and professionals.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-ResumeForge%20AI-6C63FF?style=for-the-badge&logo=google-chrome&logoColor=white)](https://resumeforge-studio.lovable.app/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/arish096/resumeforge-ai)
@@ -12,57 +12,43 @@
 ![Issues](https://img.shields.io/github/issues/arish096/resumeforge-ai?style=flat-square)
 ![Last Commit](https://img.shields.io/github/last-commit/arish096/resumeforge-ai?style=flat-square)
 
-> 🚧 **MVP / In Development** — ResumeForge AI is actively being developed into a complete AI-powered resume creation platform.
+> 🚧 **MVP / In Development** — ResumeForge AI is being developed into a complete AI-powered resume creation and optimization platform.
 
 ---
 
-## ✨ About ResumeForge AI
+## ✨ Overview
 
-**ResumeForge AI** is an AI-powered resume builder designed to help **students, freshers, and experienced professionals** create structured, professional, and ATS-friendly resumes.
+**ResumeForge AI** is a modern resume-building platform designed to make professional resume creation faster, simpler, and more structured.
 
-The platform combines:
+Instead of starting with a blank document, users can organize their information, work with professional templates, preview their resume, and prepare their resume for specific job opportunities.
 
-- 🤖 AI-assisted resume writing
-- 🎨 Professional resume templates
-- 📄 PDF resume generation
-- 👀 Live resume preview
-- 📊 ATS analysis
-- 🎯 Job-specific resume tailoring
-- 📥 Resume import
-- 💾 Resume data management
+### 🎯 Core Vision
 
-The goal is simple:
-
-> **Turn your information into a professional resume without starting from scratch.**
-
----
-
-## 🎯 Who Is It For?
+> **Turn your information into a professional, structured, job-ready resume — without starting from scratch.**
 
 ResumeForge AI is designed for:
 
 - 🎓 Students
 - 🌱 Freshers
-- 💼 Experienced Professionals
-- 💻 Developers
+- 💼 Experienced professionals
+- 💻 Developers & engineers
 - 📈 Business & MBA candidates
 - 💰 Finance professionals
 - 📣 Marketing professionals
 - 🏥 Healthcare professionals
 - 🎨 Designers
-- ⚙️ Engineers
 - 📚 Educators
 - ⚖️ Law professionals
 
 ---
 
-## 🧩 Core Features
+## ⚡ Key Features
 
-### 👤 Fresher & Experienced Modes
+### 👤 Fresher & Experienced Resume Modes
 
-Choose the resume experience level that matches your profile:
+Create a resume based on your career stage.
 
-**Fresher / Student**
+**For Students & Freshers**
 - Education
 - Projects
 - Skills
@@ -71,9 +57,9 @@ Choose the resume experience level that matches your profile:
 - Internships
 - Extracurricular activities
 
-**Experienced Professional**
-- Work Experience
+**For Experienced Professionals**
 - Professional Summary
+- Work Experience
 - Skills
 - Projects
 - Education
@@ -84,13 +70,13 @@ Choose the resume experience level that matches your profile:
 
 ### 🤖 AI-Assisted Resume Creation
 
-ResumeForge AI is designed to help transform user-provided information into polished resume content.
+ResumeForge AI is designed to help transform user-provided information into clear, professional resume content.
 
-The system follows an important principle:
+The core principle is:
 
-> **AI should improve your information, not invent your achievements.**
+> **AI should improve your information — not invent it.**
 
-It should not fabricate:
+The system is designed to avoid fabricating:
 
 - Companies
 - Job titles
@@ -102,9 +88,11 @@ It should not fabricate:
 
 ---
 
-### 🎨 Resume Templates
+### 🎨 Professional Resume Templates
 
-The platform is designed around multiple professional template styles:
+ResumeForge AI uses a template-based architecture so the same resume data can be presented through different designs.
+
+Planned template styles include:
 
 - **ATS Simple**
 - **Modern Professional**
@@ -112,22 +100,15 @@ The platform is designed around multiple professional template styles:
 - **Classic**
 - **Developer**
 
-The architecture can be extended with additional templates for areas such as:
-
-- MBA / Business
-- Finance
-- Marketing
-- Creative
-- Technology
-- Healthcare
+The architecture can be extended with specialized templates for areas such as technology, finance, business, marketing, healthcare, and creative roles.
 
 ---
 
 ### 👀 Live Resume Preview
 
-Edit your resume information and preview the final structure while building.
+Edit your resume information while viewing the structure of the final document.
 
-The goal is to make the editing experience:
+The intended workflow is:
 
 **Input → Edit → Preview → Export**
 
@@ -135,31 +116,29 @@ The goal is to make the editing experience:
 
 ### 📄 PDF Export
 
-Generate a professional PDF version of the completed resume.
-
-The resume structure is designed to remain clean and readable when exported.
+Generate a professional PDF version of your completed resume while maintaining a clean and readable structure.
 
 ---
 
-### 📊 ATS Analyzer
+### 📊 ATS Analysis
 
-ResumeForge AI is planned to provide an ATS-style compatibility analysis based on factors such as:
+ResumeForge AI is designed to provide an ATS-style analysis based on factors such as:
 
 - Relevant keywords
 - Resume structure
 - Section completeness
-- Job description alignment
+- Job-description alignment
 - Formatting considerations
 
-> **ATS scores are estimates, not guarantees of passing a real applicant tracking system.**
+> ⚠️ ATS scores are estimates and do not guarantee that a resume will pass a real Applicant Tracking System.
 
 ---
 
-### 🎯 Tailor Resume for a Job
+### 🎯 Job-Specific Resume Tailoring
 
-Users can provide a job description and adapt their resume content toward the requirements of that role.
+Users can provide a job description and adapt their resume toward the requirements of a particular role.
 
-The goal is to improve:
+The system is designed to improve:
 
 - Keyword relevance
 - Skill alignment
@@ -171,20 +150,20 @@ The goal is to improve:
 
 ### 📥 Resume Import
 
-ResumeForge AI is designed to support importing an existing resume and converting its information into editable structured data.
+The platform is designed to support importing an existing resume and converting its information into editable structured data.
 
-Potential input:
+Potential input formats include:
 
 - PDF
-- Resume image
+- Resume images
 
-The extracted information can then be reviewed and edited before generating a new resume.
+Imported information can be reviewed and edited before generating a new resume.
 
 ---
 
-### 🎨 Create a Similar Style
+### 🎨 Style-Inspired Resume Creation
 
-The platform can be extended to analyze the **general design structure** of an uploaded resume, including:
+ResumeForge AI can be extended to analyze the general design characteristics of an uploaded resume, such as:
 
 - Typography
 - Spacing
@@ -192,27 +171,43 @@ The platform can be extended to analyze the **general design structure** of an u
 - Layout
 - Color approach
 
-The generated design should remain an **original design**, rather than copying proprietary logos, assets, or templates.
+The objective is to create an **original design inspired by general visual characteristics**, rather than copying proprietary logos, assets, or templates.
 
 ---
 
-## 🖥️ Dashboard
+## 🖥️ Product Workflow
 
-The planned dashboard provides access to:
-
-- ➕ Create New Resume
-- 📂 My Resumes
-- 📥 Import Resume
-- 📊 ATS Analyzer
-- 🎯 Tailor Resume for a Job
+```text
+User Information
+       │
+       ▼
+Resume Builder
+       │
+       ▼
+Structured Resume Data
+       │
+       ├───────────────┐
+       ▼               ▼
+AI Assistance      Template Engine
+       │               │
+       └───────┬───────┘
+               ▼
+          Live Preview
+               │
+        ┌──────┴──────┐
+        ▼             ▼
+   ATS Analysis   Job Tailoring
+        │             │
+        └──────┬──────┘
+               ▼
+           PDF Export
+```
 
 ---
 
-## 🧱 Resume JSON Architecture
+## 🧱 Structured Resume Architecture
 
-Resume information is designed around structured data rather than being stored only as visual text.
-
-Example structure:
+ResumeForge AI is designed around structured resume data rather than storing information only as visual text.
 
 ```json
 {
@@ -228,58 +223,34 @@ Example structure:
 }
 ```
 
-This approach makes it easier to:
+A structured approach makes it easier to:
 
-- Switch templates
-- Edit resume sections
-- Generate PDFs
-- Analyze ATS compatibility
-- Tailor resumes
-- Add future AI functionality
-
----
-
-## 🏗️ Product Architecture
-
-```text
-User Input
-    │
-    ▼
-Resume Data
-    │
-    ▼
-AI-Assisted Content
-    │
-    ▼
-Structured Resume JSON
-    │
-    ├──────────────┐
-    ▼              ▼
-Template Engine   ATS Analysis
-    │              │
-    ▼              ▼
-Live Preview   Job Tailoring
-    │
-    ▼
-PDF Export
-```
+- 🔄 Switch between templates
+- ✏️ Edit individual sections
+- 📄 Generate PDFs
+- 📊 Perform ATS analysis
+- 🎯 Tailor resumes to jobs
+- 🤖 Add future AI capabilities
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React
-- TypeScript
-- Modern CSS
-- Responsive UI
 
-### Backend / Services
+- ⚛️ React
+- 🟦 TypeScript
+- 🎨 Modern CSS
+- 📱 Responsive UI
+
+### Backend & Services
+
 - Supabase
 - Database-ready architecture
 - Authentication-ready architecture
 
 ### AI Layer
+
 Designed for integration with modern AI models and APIs for:
 
 - Resume content generation
@@ -291,13 +262,13 @@ Designed for integration with modern AI models and APIs for:
 
 ## 🗺️ Roadmap
 
-### ✅ Current / MVP
+### ✅ Foundation
 
 - [x] Resume builder foundation
 - [x] Professional UI
 - [x] Resume creation workflow
 - [x] Template-based architecture
-- [x] Live preview
+- [x] Live resume preview
 - [x] PDF-oriented resume generation
 - [x] Supabase integration foundation
 
@@ -307,103 +278,105 @@ Designed for integration with modern AI models and APIs for:
 - [ ] ATS analyzer
 - [ ] Job-specific resume tailoring
 - [ ] Resume import
-- [ ] More professional templates
+- [ ] Additional professional templates
 - [ ] Improved dashboard
 - [ ] Authentication
 - [ ] Cloud resume storage
 
 ### 🚀 Future
 
-- [ ] AI job matching
-- [ ] Resume scoring improvements
+- [ ] AI-powered job matching
+- [ ] Advanced resume scoring
 - [ ] Job application tracking
 - [ ] Premium templates
 - [ ] Custom branding
-- [ ] Payment / subscription system
+- [ ] Payment & subscription system
 - [ ] Advanced analytics
 
 ---
 
 ## 🎨 Design Philosophy
 
-ResumeForge AI focuses on three things:
+ResumeForge AI is built around three principles:
 
 ### 1. Professional
 
-Resumes should look suitable for real applications, internships, and professional opportunities.
+Resumes should look appropriate for real applications, internships, and professional opportunities.
 
 ### 2. Simple
 
-Users should be able to create a resume without fighting complicated editors.
+Creating a resume should not require learning a complicated document editor.
 
 ### 3. Flexible
 
-The same structured resume data should work across multiple templates and future AI features.
+Structured resume data should work across multiple templates and future AI-powered features.
 
 ---
 
 ## 🔐 Product Principles
 
-ResumeForge AI follows these principles:
+ResumeForge AI follows a few core principles:
 
 - **User-controlled information**
 - **No fabricated achievements**
 - **Original template designs**
-- **Readable and professional formatting**
+- **Readable professional formatting**
 - **ATS-aware structure**
 - **Transparent AI assistance**
 - **Privacy-conscious architecture**
 
 ---
 
-## 📈 Current Status
+## 📈 Project Status
 
 **🚧 ResumeForge AI — MVP / In Development**
 
-The project is currently being developed toward a complete resume-building SaaS platform.
+The project is currently evolving toward a complete resume-building SaaS platform.
 
-The current version demonstrates the product direction and core resume-building experience, while advanced AI, ATS, import, authentication, and other features are being developed progressively.
+The current version demonstrates the product direction and core resume-building experience, while advanced capabilities such as AI generation, ATS analysis, job tailoring, resume import, authentication, and cloud storage are being developed progressively.
 
 ---
 
 ## 🌐 Project Links
-
 ### 🚀 Live Demo
 
-**https://resumeforge-studio.lovable.app/**
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-ResumeForge%20AI-6C63FF?style=for-the-badge&logo=google-chrome&logoColor=white)](https://resumeforge-studio.lovable.app/)
 
 ### 💻 GitHub Repository
 
-**https://github.com/arish096/resumeforge-ai**
-
+[![GitHub Repository](https://img.shields.io/badge/GitHub%20Repository-ResumeForge%20AI-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/arish096/resumeforge-ai)
 ---
 
 ## 👨‍💻 Creator
 
-**Built by Arish Islam**
+### Arish Islam
 
-ResumeForge AI is an independent project focused on combining:
+ResumeForge AI is an independent project exploring the intersection of:
 
-**AI + Web Development + Resume Automation**
+**AI × Web Development × Resume Automation**
+
+Built with a focus on creating practical, useful, and scalable AI-powered web applications.
 
 ---
 
-## ⭐ Support
+## ⭐ Support the Project
 
 If you find ResumeForge AI interesting:
 
-⭐ **Star the repository**
-
-🍴 **Fork the project**
-
-🐛 **Report issues**
-
-💡 **Share ideas and improvements**
+- ⭐ Star the repository
+- 🍴 Fork the project
+- 🐛 Report bugs or issues
+- 💡 Suggest improvements
+- 🔧 Contribute ideas
 
 ---
+
+<div align="center">
 
 ### 🚀 ResumeForge AI
 
 **Build. Tailor. Get Hired.**
 
 Made with 💜 by **Arish Islam**
+
+</div>
