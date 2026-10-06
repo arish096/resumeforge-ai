@@ -37,7 +37,7 @@ export async function runModel(system: string, messages: ModelMessage[]): Promis
       },
     },
   });
-  const text = await result.text.catch((e) => {
+  const text = await Promise.resolve(result.text).catch((e: unknown) => {
     failure ??= e;
     return "";
   });

@@ -10,7 +10,7 @@ export interface PersonalInfo {
   github: string;
   portfolio: string;
   /** Optional profile photo as a small data URL. */
-  photo?: string;
+  photo?: string | undefined;
 }
 
 export interface EducationEntry {

@@ -85,7 +85,7 @@ async function toThumb(file: File, size = 320): Promise<string> {
   return c.toDataURL("image/jpeg", 0.85);
 }
 
-function PhotoPicker({ value, onChange }: { value?: string; onChange: (v: string | undefined) => void }) {
+function PhotoPicker({ value, onChange }: { value?: string | undefined; onChange: (v: string | undefined) => void }) {
   return (
     <div className="mt-5 flex items-center gap-4 rounded-xl border border-border bg-surface-muted p-4">
       {value ? <img src={value} alt="Profile" className="size-16 rounded-full object-cover" /> : <div className="size-16 rounded-full bg-secondary" />}

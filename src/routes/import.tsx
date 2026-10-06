@@ -36,10 +36,10 @@ function normalise(raw: any): ResumeData {
   return {
     personal: { ...base.personal, ...(raw?.personal ?? {}) },
     summary: String(raw?.summary ?? ""),
-    education: withIds<EducationEntry>(raw?.education).map((e) => ({ ...base.education[0], institution: "", degree: "", field: "", startDate: "", endDate: "", grade: "", details: "", ...e })),
+    education: withIds<EducationEntry>(raw?.education),
     skills: withIds<SkillGroup>(raw?.skills).map((g) => ({ ...g, category: g.category || "Skills", items: Array.isArray(g.items) ? g.items.filter(Boolean) : [] })),
-    projects: withIds<ProjectEntry>(raw?.projects).map((p) => ({ name: "", description: "", url: "", github: "", ...p, technologies: Array.isArray(p.technologies) ? p.technologies.filter(Boolean) : [] })),
-    experience: withIds<ExperienceEntry>(raw?.experience).map((x) => ({ role: "", company: "", location: "", startDate: "", endDate: "", responsibilities: "", achievements: "", ...x, current: Boolean(x.current) })),
+    projects: withIds<ProjectEntry>(raw?.projects).map((p) => ({ ...p, technologies: Array.isArray(p.technologies) ? p.technologies.filter(Boolean) : [] })),
+    experience: withIds<ExperienceEntry>(raw?.experience).map((x) => ({ ...x, current: Boolean(x.current) })),
     certifications: withIds<CertificationEntry>(raw?.certifications),
     achievements: withIds<AchievementEntry>(raw?.achievements),
     languages: withIds<LanguageEntry>(raw?.languages),

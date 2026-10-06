@@ -284,7 +284,7 @@ const localAI: AIService = {
 };
 
 /** Calls the real AI model; falls back to the local rules if AI is unavailable. */
-async function remote<T>(task: Parameters<typeof aiTask>[0]["data"]["task"], payload: unknown, fallback: () => Promise<T>, map: (j: any) => T): Promise<T> {
+async function remote<T>(task: "summary" | "project" | "experience" | "skills" | "tailor" | "ats", payload: unknown, fallback: () => Promise<T>, map: (j: any) => T): Promise<T> {
   try {
     const res = await aiTask({ data: { task, payload: JSON.stringify(payload) } });
     if (!res.ok) throw new Error(res.error);
